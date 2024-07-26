@@ -1,16 +1,16 @@
 import React, { useEffect } from "react"
-import { Outlet, useNavigate } from "react-router-dom"
+import { Outlet, useLocation, useNavigate } from "react-router-dom"
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
 import { logout, setUser } from "../redux/userSlice"
 import Sidebar from "../components/Sidebar"
+import logo from "../assets/logo2.jpg"
 
 const Home = () => {
     const user = useSelector(state => state.user)
     const dispatch = useDispatch()
     const navigate = useNavigate()
-
-    console.log("Redux User", user)
+    const location = useLocation();
 
     const fetchUserDetails = async () => {
         try {
@@ -37,15 +37,25 @@ const Home = () => {
     useEffect(() => {
         fetchUserDetails()
     }, [])
+
+    const basePath = location.pathname === "/"
+
     return (
         <div className="grid grid-cols-[300px,1fr] h-screen max-h-screen">
-            <section className="bg-white ">
-                <Sidebar/>
+            <section className={`bg-white ${!basePath && "hidden"} lg:block`}>
+                <Sidebar />
             </section>
 
-            <section >
+            <section className={`${basePath && 'hidden'}`}>
                 <Outlet />
             </section>
+
+            <div className="flex justify-center items-center flex-col gap-2">
+                <div>
+                   <img src={logo} width={200} alt="logo"/>
+                </div>
+                <p className="text-lg mt-2 text-slate-500">Select user to send message</p>
+            </div>
 
         </div>
     )

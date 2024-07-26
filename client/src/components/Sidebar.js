@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
-import { IoMdChatboxes } from 'react-icons/io'
+import { IoMdChatboxes } from 'react-icons/io';
 import { FaUserPlus } from "react-icons/fa";
 import { NavLink } from 'react-router-dom';
 import { BiLogOut } from "react-icons/bi";
-import Avatar from "./Avatar"
+import Avatar from "./Avatar";
 import { useSelector } from 'react-redux';
 import EditUserDetails from './EditUserDetails';
 
 const Sidebar = () => {
-
-    const user = useSelector(state => state?.user)
-    const [editUserOpen, setEditUserOpen] = useState(true);
+    const user = useSelector(state => state?.user);
+    const [editUserOpen, setEditUserOpen] = useState(false);
 
     return (
         <div className='w-full h-full'>
@@ -19,15 +18,15 @@ const Sidebar = () => {
                     <NavLink title='Chat' className={({ isActive }) => `w-12 h-12 flex justify-center items-center cursor-pointer hover:bg-slate-200 rounded ${isActive && "bg-slate-200"}`}>
                         <IoMdChatboxes size={20} />
                     </NavLink>
-                    <div title='add friend' className='w-12 h-12 flex justify-center items-center cursor-pointer hover:bg-slate-200 rounded'>
+                    <div title='Add Friend' className='w-12 h-12 flex justify-center items-center cursor-pointer hover:bg-slate-200 rounded'>
                         <FaUserPlus size={20} />
                     </div>
                 </div>
                 <div className='flex flex-col items-center'>
                     <button className='mx-auto' title={user?.name} onClick={() => setEditUserOpen(true)}>
-                        <Avatar width={40} height={40} name={user?.name} />
+                        <Avatar width={40} height={40} name={user?.name} imageUrl={user?.profile_pic}/>
                     </button>
-                    <button title='logout' className='w-12 h-12 flex justify-center items-center cursor-pointer hover:bg-slate-200 rounded'>
+                    <button title='Logout' className='w-12 h-12 flex justify-center items-center cursor-pointer hover:bg-slate-200 rounded'>
                         <span className="-ml-2">
                             <BiLogOut size={20} />
                         </span>
@@ -35,15 +34,12 @@ const Sidebar = () => {
                 </div>
             </div>
 
-            {/* {Edit User Details} */}
-            {
-                editUserOpen && (
-                    <EditUserDetails onClose={() => setEditUserOpen(false)} user={user} />
-                )
-            }
-
+            {/* Edit User Details */}
+            {editUserOpen && (
+                <EditUserDetails onClose={() => setEditUserOpen(false)} user={user} />
+            )}
         </div>
-    )
-}
+    );
+};
 
-export default Sidebar
+export default Sidebar;
