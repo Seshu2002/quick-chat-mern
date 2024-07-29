@@ -30,17 +30,17 @@ const Avatar = ({ userId, name, imageUrl, width, height }) => {
         const randomNumber = Math.floor(Math.random() * bgColor.length)
 
     return (
-        <div className={`text-slate-800 overflow-hidden rounded-full font-bold`} style={{width : width+"px", height : height+"px" }}>
+        <div className={`text-slate-800 rounded-full font-bold`} style={{width : width+"px", height : height+"px" }}>
             {
                 imageUrl ? (
                     <img src={imageUrl} width={width} height={height} alt={name} className='overflow-hidden rounded-full'/>
                 ) : (
                     name ? (
-                        <div style={{width : width+"px", height : height+"px" }} className={`${bgColor[randomNumber]} text-lg overflow-hidden rounded-full flex justify-center items-center`}>
+                        <div style={{width : width+"px", height : height+"px" }} className={`overflow-hidden rounded-full flex justify-center items-center text-lg ${bgColor[randomNumber]}`}>
                             {avatarName}
                         </div>
                     ) : (
-                        <div className='w-fit mx-auto mb-2'>
+                        <div>
                             <PiUserCircle
                                 size={width}
                             />

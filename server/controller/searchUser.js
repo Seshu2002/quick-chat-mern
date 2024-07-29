@@ -11,7 +11,7 @@ async function searchUser(req,res){
                 {name : query},
                 {email : query}
             ]
-        })
+        }).select("-password")
 
         return res.json({
             message : 'all user',

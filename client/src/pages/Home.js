@@ -50,7 +50,7 @@ const Home = () => {
                 <Outlet />
             </section>
 
-            <div className="flex justify-center items-center flex-col gap-2 lg-hidden">
+            <div className={`justify-center items-center flex-col gap-2 lg-hidden ${!basePath ? "hidden" : "lg:flex"}`}>
                 <div>
                    <img src={logo} width={200} alt="logo"/>
                 </div>
