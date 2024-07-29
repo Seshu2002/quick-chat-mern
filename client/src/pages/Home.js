@@ -23,7 +23,7 @@ const Home = () => {
 
             dispatch(setUser(response.data.data))
 
-            if (response.data.logout) {
+            if (response.data.data.logout) {
                 dispatch(logout())
                 navigate("/email")
             }
@@ -50,7 +50,7 @@ const Home = () => {
                 <Outlet />
             </section>
 
-            <div className="flex justify-center items-center flex-col gap-2">
+            <div className="flex justify-center items-center flex-col gap-2 lg-hidden">
                 <div>
                    <img src={logo} width={200} alt="logo"/>
                 </div>
