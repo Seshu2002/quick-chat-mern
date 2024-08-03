@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios'
-import toast from 'react-hot-toast'
+import axios from 'axios';
+import toast from 'react-hot-toast';
 import Avatar from '../components/Avatar';
 import { useDispatch } from 'react-redux';
 import { setToken, setUser } from '../redux/userSlice';
@@ -10,33 +10,30 @@ const CheckPasswordPage = () => {
 
     const [data, setData] = useState({
         password: ""
-    })
-    const navigate = useNavigate()
-    const location = useLocation()
-    const dispatch = useDispatch()
+    });
+    const navigate = useNavigate();
+    const location = useLocation();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (!location?.state?.name) {
-            navigate('/email')
+            navigate('/email');
         }
-    }, [])
+    }, []);
 
     const handleOnChange = (e) => {
-        const { name, value } = e.target
-
-        setData((previous) => {
-            return {
-                ...previous,
-                [name]: value
-            }
-        })
-    }
+        const { name, value } = e.target;
+        setData((previous) => ({
+            ...previous,
+            [name]: value
+        }));
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        const CHECK_PASSWORD_URL = `${process.env.REACT_APP_BACKEND_URL}/api/password`
+        const CHECK_PASSWORD_URL = `${process.env.REACT_APP_BACKEND_URL}/api/password`;
 
         try {
             const response = await axios({
@@ -47,23 +44,23 @@ const CheckPasswordPage = () => {
                     password: data.password
                 },
                 withCredentials: true
-            })
-            toast.success(response.data.message)
+            });
+            toast.success(response.data.message);
 
             if (response.data.success) {
-                dispatch(setToken(response?.data?.token))
-               localStorage.setItem('token', response?.data?.token)
+                dispatch(setToken(response?.data?.token));
+                localStorage.setItem('token', response?.data?.token);
                 setData({
-                    password: "",
-                })
-               navigate("/")
+                    password: ""
+                });
+                navigate("/", { state: { _id: location?.state?._id, name: location?.state?.name, profile_pic: location?.state?.profile_pic } });
             }
 
         } catch (error) {
-            toast.error(error?.response?.data?.message)
-            console.log("error", error)
+            toast.error(error?.response?.data?.message);
+            console.log("error", error);
         }
-    }
+    };
 
     return (
         <div className='mt-5'>
@@ -77,13 +74,11 @@ const CheckPasswordPage = () => {
                     />
                 </div>
                 <h2 className='font-semibold text-lg mt-1 mx-auto w-fit'>{location?.state?.name}</h2>
-
                 <h2 className='w-fit mx-auto'>Welcome to Quick Chat!</h2>
 
-                <form className='grid gap-4 mt-2 ' onSubmit={handleSubmit}>
-
+                <form className='grid gap-4 mt-2' onSubmit={handleSubmit}>
                     <div className='flex flex-col gap-1'>
-                        <label htmlFor='password'>Password : </label>
+                        <label htmlFor='password'>Password:</label>
                         <input
                             type='password'
                             id="password"
@@ -101,14 +96,14 @@ const CheckPasswordPage = () => {
                     >
                         Login
                     </button>
-
                 </form>
+
                 <p className='my-3 text-center'>
-                    <Link to={"/forgot-password"} className='hover:text-primary font-semibold'>Forgot Password?</Link>
+                    <Link to={"/forgot-password"} state={{ _id: location?.state?._id, name: location?.state?.name, profile_pic: location?.state?.profile_pic }} className='hover:text-primary font-semibold'>Forgot Password?</Link>
                 </p>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default CheckPasswordPage;

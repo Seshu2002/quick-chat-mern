@@ -8,6 +8,7 @@ const userDetails = require("../controller/userDetails");
 const logout = require("../controller/logout");
 const updateUserDetails = require("../controller/updateUserDetails");
 const searchUser = require("../controller/searchUser");
+const forgotPassword = require("../controller/forgotPassword")
 
 // create user api
 router.post('/register',registerUser);
@@ -17,5 +18,6 @@ router.get('/user-details',userDetails)
 router.get('/logout',logout)
 router.post('/update-user',updateUserDetails)
 router.post('/search-user',searchUser)
+router.post('/forgot-password',forgotPassword)
 
 module.exports = router;
